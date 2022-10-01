@@ -17,17 +17,14 @@ wallpaperId = wallpaperId[0]
 
 #print(wallpaperId)
 
-#imageLink = "https://wall.alphacoders.com/wallpaper.php?i=" + wallpaperId + "&w=1920&h=1080&type=stretch"
+imageLink = "https://wall.alphacoders.com/wallpaper.php?i=" + wallpaperId + "&w=1920&h=1080&type=stretch"
 URL = "https://wall.alphacoders.com/big.php?i=" + wallpaperId
 #print(URL)
 
 page = requests.get(URL)
 
-soup = BeautifulSoup(page.content, "html.parser")
+soup = BeautifulSoup(page.text, 'lxml')
+link = soup.find(itemprop="image")
+end = str(link).find("\"",15)
+print((str(link)[15:end]))
 
-soup = str(soup)
-
-downloadLink = str(re.split("picture", soup)[0])
-downloadLink = str(re.split("href", downloadLink)[-1])
-downloadLink = downloadLink.split('"')
-print(downloadLink[1], end=" ")
